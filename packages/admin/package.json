@@ -1,0 +1,20 @@
+{
+  "name": "anga-admin",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "handlebars": "^4.0.11",
+    "hoek": "^5.0.3",
+    "joi": "^13.4.0",
+    "nodemailer": "^4.6.7",
+    "nodemailer-markdown": "^1.0.2",
+    "p-map": "^1.2.0",
+    "to-case": "^2.0.0"
+  }
+}

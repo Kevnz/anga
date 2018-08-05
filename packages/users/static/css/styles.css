@@ -1,0 +1,228 @@
+#app {
+  margin-top: 15px;
+}
+
+:root {
+  --primary-light-color: #f8f6ff;
+  --secondary-light-color: #cacbd5;
+  --primary-dark-color: #3d4252;
+  --secondary-dark-color: #666f89;
+  --accent-color: #007CF9;
+  --main-bg-color: var(--primary-light-color);
+  --main-header-bg-color: var(--accent-color);
+  --main-header-color: var(--primary-light-color);
+  --main-color: var(--primary-dark-color);
+  --alt-lighter-color: var(--secondary-light-color);
+  --main-font: 'Fira Sans', sans-serif;
+  --design-font: 'Roboto', serif;
+
+  font-size: 13px;
+}
+
+* {
+  font-family: var(--main-font);
+  font-weight: 300;
+  color: var(--main-color);
+}
+
+body {
+  background-color: var(--main-bg-color);
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: normal;
+  font-family: var(--design-font);
+}
+
+header,
+main,
+footer {
+  padding: 8px;
+  padding-left: 20px;
+}
+
+header {
+  background-color: var(--main-header-bg-color);
+  border-bottom: 6px solid var(--main-color);
+}
+
+header h1 {
+  color: var(--main-header-color);
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  padding-top: 16px;
+}
+
+button,
+input[type="submit"],
+.button {
+  color: var(--main-header-bg-color);
+  border: 1px solid var(--main-header-bg-color);
+  border-radius: 4px;
+  background-color: var(--main-bg-color);
+  padding: 6px 16px;
+  text-decoration: none;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.action-button {
+  color: var(--main-header-bg-color);
+  font-size: 1.5em;
+  border: 1px solid var(--main-header-bg-color);
+  border-radius: 4px;
+  background-color: var(--main-bg-color);
+  padding: 6px 32px;
+  text-decoration: none;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+button:hover,
+input[type="submit"]:hover,
+.button.action-button:hover {
+  color: var(--main-bg-color);
+  background-color: var(--main-header-bg-color);
+}
+
+.small {
+  font-size: 0.5em;
+  padding: 2px 8px;
+}
+
+.spaced {
+  margin-left: 10px;
+}
+
+dialog {
+  background-color: var(--main-bg-color);
+  border: 3px solid var(--secondary-dark-color);
+  padding: 2rem;
+  border-radius: 6px;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.1), 0 0 10px rgba(0, 0, 0, 0.25);
+  max-width: 90vw;
+}
+
+dialog[open] {
+  animation: appear 0.15s cubic-bezier(0, 1.8, 1, 1.8);
+}
+
+dialog::backdrop {
+  background: linear-gradient(45deg, var(--primary-dark-color), var(--secondary-dark-color));
+}
+
+dialog+.backdrop {
+  background: linear-gradient(45deg, var(--primary-dark-color), var(--secondary-dark-color));
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+nav a {
+  color: var(--main-bg-color);
+  padding: 4px;
+  display: block;
+}
+
+nav a:hover {
+  color: var(--alt-lighter-color);
+  background-color: var(--main-color);
+}
+
+ul.mood-list {
+  list-style: none;
+  padding: 0;
+}
+
+.form-row {
+  padding: 4px;
+}
+
+select {
+  height: 2rem;
+}
+
+textarea {
+  margin: 0;
+  width: 34rem;
+  height: 10rem;
+}
+
+.card {
+  margin-bottom: 10px;
+}
+
+.card div {
+  max-width: 400px;
+  font-size: 0.92rem;
+  border: 1px solid var(--secondary-dark-color);
+  background-color: var(--secondary-light-color);
+  padding: 12px;
+  margin-bottom: 28px;
+}
+
+th {
+  font-weight: bold;
+  background-color: var(--secondary-dark-color);
+  color: var(--primary-light-color)
+}
+
+th,
+td {
+  padding: 0.4rem;
+}
+
+dl {
+  float: left;
+  margin: 1em 0;
+  padding: 0;
+}
+
+dt {
+  clear: left;
+  float: left;
+  width: 200px;
+  margin: 0;
+  padding: 5px;
+
+  font-weight: bold;
+}
+
+dd {
+  width: auto;
+  float: left;
+  min-width: 300px;
+  margin: 0;
+  padding: 5px;
+}
+
+@media all and (min-width: 600px) {
+  nav ul {
+    padding: 0;
+    margin: 0;
+    margin-top: 0.2rem;
+    list-style: none;
+  }
+
+  nav li {
+    display: inline-block;
+    width: 5rem;
+  }
+}

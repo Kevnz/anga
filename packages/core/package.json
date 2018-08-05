@@ -1,0 +1,50 @@
+{
+  "name": "anga-core",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "anga-admin": "^1.0.0",
+    "anga-auth": "1.0.0",
+    "anga-flash": "1.0.0",
+    "anga-logger": "1.0.0",
+    "anga-models-loader": "^1.0.0",
+    "anga-users": "1.0.0",
+    "blip": "^0.2.3",
+    "blipp": "^3.0.0",
+    "catbox": "^10.0.2",
+    "catbox-mongodb": "^4.2.0",
+    "debug": "^3.1.0",
+    "ejs": "^2.6.1",
+    "globby": "^8.0.1",
+    "glue": "^5.0.0",
+    "good": "^8.1.1",
+    "good-console": "^7.1.0",
+    "handlebars": "^4.0.11",
+    "hapi": "^17.5.2",
+    "hapi-auth-cookie": "^9.0.0",
+    "hapi-boom-decorators": "^4.1.1",
+    "hapi-mongo-models": "^7.1.0",
+    "hapi-remote-address": "^1.0.0",
+    "hapi-router": "^4.0.0",
+    "hoek": "^5.0.3",
+    "inert": "^5.1.0",
+    "mongo-models": "^2.0.3",
+    "mongodb": "^3.1.1",
+    "nodemailer": "^4.6.7",
+    "nodemailer-markdown": "^1.0.2",
+    "noobnoob": "^1.0.1",
+    "p-map": "^1.2.0",
+    "require-glob": "^3.2.0",
+    "vision": "^5.3.3",
+    "yar": "^9.0.1"
+  },
+  "devDependencies": {
+    "mongodb-memory-server": "^1.9.1"
+  }
+}

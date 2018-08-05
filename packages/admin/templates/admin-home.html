@@ -1,0 +1,46 @@
+<div>
+  <h2>{{title}}</h2>
+  <section>
+    <table>
+      <thead>
+        <tr>
+          <th>Authentication and Authorization</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <a href="/admin/users/groups">Groups</a>
+          </td>
+        </tr>
+        <tr>
+          <td>Users</td>
+        </tr>
+        <tr>
+          <td>Sessions</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </section>
+  <!-- The apps -->
+  {{#each apps}}
+  <section>
+    <table>
+      <thead>
+        <tr>
+          <th>{{APP_NAME}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each MODEL_DETAILS }}
+        <tr>
+          <td>{{name}}</td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+
+  </section>
+  {{/each}}
+</div>

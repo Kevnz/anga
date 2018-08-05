@@ -1,0 +1,14 @@
+<section>
+  <h2>{{title}}</h2>
+  <table class="people_list">
+    {{#each users}}
+    <tr>
+      <td>{{this.username}}</td>
+      <td>{{this.email}}</td>
+      <td>
+        <a href="/admin/users/{{this._id}}">View</a>
+      </td>
+    </tr>
+    {{/each}}
+  </table>
+</section>
