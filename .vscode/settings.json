@@ -1,5 +1,5 @@
 {
-  "prettier.arrowParens": "always",
-  "prettier.singleQuote": true,
-  "editor.formatOnSave": true
+  "editor.formatOnSave": false,
+  "eslint.alwaysShowStatus": true,
+  "eslint.autoFixOnSave": true
 }
