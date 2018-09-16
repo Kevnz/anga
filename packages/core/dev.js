@@ -10,8 +10,5 @@ const setupServerReturnUri = async () => {
   });
 
   const inMemoryUri = await mongoServer.getConnectionString();
-  console.log('dev db', inMemoryUri);
   return inMemoryUri;
 };
-
-module.exports = setupServerReturnUri;

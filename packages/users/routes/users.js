@@ -49,7 +49,7 @@ module.exports = [
       },
       pre: [Preware.requireAdminGroup('root')]
     },
-    handler: async function (request, h) {
+    handler: async function(request, h) {
       const query = {};
       const limit = request.query.limit;
       const page = request.query.page;
@@ -81,7 +81,7 @@ module.exports = [
       },
       pre: [Preware.requireAdminGroup('root')]
     },
-    handler: async function (request, h) {
+    handler: async function(request, h) {
       const query = {};
       const limit = request.query.limit;
       const page = request.query.page;
@@ -125,7 +125,7 @@ module.exports = [
         Preware.requireAdminGroup('root'),
         {
           assign: 'usernameCheck',
-          method: async function (request, h) {
+          method: async function(request, h) {
             const user = await User.findByUsername(request.payload.username);
 
             if (user) {
@@ -137,7 +137,7 @@ module.exports = [
         },
         {
           assign: 'emailCheck',
-          method: async function (request, h) {
+          method: async function(request, h) {
             const user = await User.findByEmail(request.payload.email);
 
             if (user) {
@@ -149,7 +149,7 @@ module.exports = [
         }
       ]
     },
-    handler: async function (request, h) {
+    handler: async function(request, h) {
       const username = request.payload.username;
       const password = request.payload.password;
       const email = request.payload.email;
@@ -179,7 +179,7 @@ module.exports = [
       },
       pre: [Preware.requireAdminGroup('root')]
     },
-    handler: async function (request, h) {
+    handler: async function(request, h) {
       const user = await User.findById(request.params.id);
 
       if (!user) {
@@ -219,7 +219,7 @@ module.exports = [
         Preware.requireAdminGroup('root'),
         {
           assign: 'usernameCheck',
-          method: async function (request, h) {
+          method: async function(request, h) {
             const conditions = {
               username: request.payload.username,
               _id: {
@@ -237,7 +237,7 @@ module.exports = [
         },
         {
           assign: 'emailCheck',
-          method: async function (request, h) {
+          method: async function(request, h) {
             const conditions = {
               email: request.payload.email,
               _id: {
@@ -255,7 +255,7 @@ module.exports = [
         }
       ]
     },
-    handler: async function (request, h) {
+    handler: async function(request, h) {
       const updateUser = {
         $set: {
           isActive: request.payload.isActive,
@@ -302,7 +302,7 @@ module.exports = [
       },
       pre: [Preware.requireAdminGroup('root')]
     },
-    handler: async function (request, h) {
+    handler: async function(request, h) {
       const user = await User.findByIdAndDelete(request.params.id);
 
       if (!user) {
@@ -334,7 +334,7 @@ module.exports = [
       },
       pre: [Preware.requireAdminGroup('root')]
     },
-    handler: async function (request, h) {
+    handler: async function(request, h) {
       const password = await User.generatePasswordHash(
         request.payload.password
       );
@@ -358,13 +358,13 @@ module.exports = [
     options: {
       tags: ['api', 'users'],
       description:
-        'Get the logged-in user\'s user details like roles. [User Account Scope]',
-      notes: 'Get the logged-in user\'s user details like roles.',
+        "Get the logged-in user's user details like roles. [User Account Scope]",
+      notes: "Get the logged-in user's user details like roles.",
       auth: {
         scope: ['admin', 'account']
       }
     },
-    handler: async function (request, h) {
+    handler: async function(request, h) {
       const id = request.auth.credentials.user._id;
       const fields = User.fieldsAdapter('username email roles');
 
@@ -377,9 +377,9 @@ module.exports = [
     options: {
       tags: ['api', 'users'],
       description:
-        'Update the logged-in user\'s user details like username and email. [User Account Scope]',
+        "Update the logged-in user's user details like username and email. [User Account Scope]",
       notes:
-        'Update the logged-in user\'s user details like username and email.',
+        "Update the logged-in user's user details like username and email.",
       auth: {
         scope: ['admin', 'account']
       },
@@ -399,7 +399,7 @@ module.exports = [
         Preware.requireNotRootUser,
         {
           assign: 'usernameCheck',
-          method: async function (request, h) {
+          method: async function(request, h) {
             const conditions = {
               username: request.payload.username,
               _id: {
@@ -417,7 +417,7 @@ module.exports = [
         },
         {
           assign: 'emailCheck',
-          method: async function (request, h) {
+          method: async function(request, h) {
             const conditions = {
               email: request.payload.email,
               _id: {
@@ -435,7 +435,7 @@ module.exports = [
         }
       ]
     },
-    handler: async function (request, h) {
+    handler: async function(request, h) {
       const userId = `${request.auth.credentials.user._id}`;
       const updateUser = {
         $set: {
@@ -468,8 +468,8 @@ module.exports = [
     path: '/api/users/my/password',
     options: {
       tags: ['api', 'users'],
-      description: 'Update the logged-in user\'s password. [User Account Scope]',
-      notes: 'Update the logged-in user\'s password.',
+      description: "Update the logged-in user's password. [User Account Scope]",
+      notes: "Update the logged-in user's password.",
       auth: {
         scope: ['admin', 'account']
       },
@@ -480,7 +480,7 @@ module.exports = [
       },
       pre: [Preware.requireNotRootUser]
     },
-    handler: async function (request, h) {
+    handler: async function(request, h) {
       const userId = `${request.auth.credentials.user._id}`;
       const password = await User.generatePasswordHash(
         request.payload.password
@@ -516,7 +516,7 @@ module.exports = [
       },
       pre: [Preware.requireAdminGroup('root')]
     },
-    handler: async function (request, h) {
+    handler: async function(request, h) {
       const user = await User.findById(request.params.id);
 
       if (!user) {
@@ -549,7 +549,7 @@ module.exports = [
       },
       pre: [Preware.requireAdminGroup('root')]
     },
-    handler: async function (request, h) {
+    handler: async function(request, h) {
       const user = await User.findById(request.params.id);
 
       if (!user) {

@@ -9,24 +9,16 @@ const Status = require('./models/status');
 const User = require('./models/user');
 
 const main = async function (mongodbUri) {
-  let options = {};
-
-  // get mongodb connection info
-
-  options = {
-    default: mongodbUri
+  let options = {
+    mongodbUri: mongodbUri,
+    db: 'anga'
   };
 
-  options = {
-    default: 'anga'
-  };
-  const mongodbName = 'anga';
-  // connect to db
-
-  const db = await MongoModels.connect({
-    uri: mongodbUri,
-    db: mongodbName
+  const config = Object.assign({}, options.default, {
+    mongodbUri: mongodbUri,
+    db: 'anga'
   });
+  const db = await MongoModels.connect(config);
 
   if (!db) {
     throw Error('Could not connect to MongoDB.');

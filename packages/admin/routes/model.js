@@ -36,8 +36,7 @@ module.exports = [
         }
       ]
     },
-    handler: async (request, h) => {
-      console.log('get the model');
+    handler: async (request) => {
       const Model = request.pre.model;
 
       const query = {};

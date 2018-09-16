@@ -12,7 +12,7 @@ const { init } = anga;
 init.load(mainSettings).then(() => init.start());
 
 process.on('SIGINT', async () => {
-  console.log('stopping hapi server');
+  console.log('stopping hapi server, SIGINT');
   try {
     await init.shutdown();
   } catch (err) {
@@ -21,7 +21,7 @@ process.on('SIGINT', async () => {
 });
 
 process.on('SIGUSR2', async () => {
-  console.log('stopping hapi server');
+  console.log('stopping hapi server, SIGUSR2');
   try {
     await init.shutdown();
   } catch (err) {

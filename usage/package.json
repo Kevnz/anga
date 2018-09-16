@@ -8,7 +8,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node .",
-    "dev": "npm run dev:database && npm run dev:web",
+    "dev": "node dev.js",
     "dev:database": "node dev-server.js",
     "dev:web": "nodemon .",
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -8,14 +8,14 @@ const admin = require('anga-admin');
 module.exports = async (apps, inMemoryUri) => {
   debug('admin routes', admin.routes);
   debug('user routes', users.routes);
-  //await init(inMemoryUri);
+
   debug('cwd', process.cwd());
-  const globbedApps = apps.map(app =>
+  const globbedApps = apps.map((app) =>
     Path.join(process.cwd(), `/${app}/models/*.js`).replace('/', '')
   );
   console.log('globbedApps', globbedApps);
   const models = await globby(globbedApps);
-  const globbedRoutes = apps.map(app =>
+  const globbedRoutes = apps.map((app) =>
     Path.relative(
       process.cwd(),
       Path.join(process.cwd(), `/${app}/routes/*.js`)

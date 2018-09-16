@@ -96,14 +96,13 @@ module.exports = {
     return server;
   },
   shutdown: async () => {
-    await server.stop({
-      timeout: 10000
-    });
-    console.log('The ANGA web server stopped');
     try {
-      console.log('mongo db server stopped');
+      await server.stop({
+        timeout: 10000
+      });
+      debug('The ANGA web server stopped');
     } catch (err) {
-      console.error('Error stopping mongo', err);
+      debug('Error stopping server', err);
     }
   }
 };

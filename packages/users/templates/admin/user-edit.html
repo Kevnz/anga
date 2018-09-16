@@ -11,13 +11,13 @@
         <input type="text" value="{{user.username}}" name="username" id="username" />
       </label>
     </div>
-    <div>
+    <div class="form-row">
       <label>Active? {{user.isActive}}
         <input type="checkbox" name="isActive" id="isActive" {{#if user.isActive}}checked{{/if}} />
       </label>
     </div>
-    <div>
-      <a href="#" class="action-button">Add Note</a>
+    <div class="form-row">
+      <a href="#" class="button">Add Note</a>
     </div>
     <div>
       <input type="submit" value="Update" />
