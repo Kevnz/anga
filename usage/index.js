@@ -1,17 +1,17 @@
-const anga = require('anga-core');
+const path = require('path');
+
+require('app-module-path').addPath(path.join(__dirname, '../packages'));
+const anga = require('core');
 const entry = 'usageapp';
 
 const mainSettings = require(`./${entry}/settings`);
 // what about configs?
 
-const {
-  init
-} = anga;
+const { init } = anga;
 
-init.load(mainSettings.INSTALLED_APPS).then(() => init.start());
+init.load(mainSettings).then(() => init.start());
 
 process.on('SIGINT', async () => {
-
   console.log('stopping hapi server');
   try {
     await init.shutdown();
@@ -21,7 +21,6 @@ process.on('SIGINT', async () => {
 });
 
 process.on('SIGUSR2', async () => {
-
   console.log('stopping hapi server');
   try {
     await init.shutdown();

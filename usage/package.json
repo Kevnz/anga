@@ -1,11 +1,16 @@
 {
   "name": "anga-usage",
   "version": "1.0.0",
+  "engines": {
+    "node": ">=10.9.0"
+  },
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "node .",
-    "dev": "nodemon .",
+    "dev": "npm run dev:database && npm run dev:web",
+    "dev:database": "node dev-server.js",
+    "dev:web": "nodemon .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -15,6 +20,7 @@
     "anga-core": "1.0.0",
     "anga-model": "^1.0.0",
     "anga-users": "1.0.0",
+    "app-module-path": "^2.2.0",
     "handlebars": "^4.0.11",
     "hoek": "^5.0.3",
     "joi": "^13.4.0",
@@ -22,5 +28,8 @@
     "nodemailer": "^4.6.7",
     "nodemailer-markdown": "^1.0.2",
     "nodemon": "^1.18.3"
+  },
+  "devDependencies": {
+    "mongodb-memory-server": "^2.2.0"
   }
 }

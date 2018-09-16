@@ -1,6 +1,6 @@
 const Assert = require('assert');
 const Joi = require('joi');
-const AngaModel = require('anga-model');
+const AngaModel = require('model');
 const NewDate = require('joistick/new-date');
 
 const schema = Joi.object({
@@ -22,7 +22,6 @@ const schema = Joi.object({
  */
 class ToDo extends AngaModel {
   static async create(title, description) {
-
     Assert.ok(title, 'Missing title argument.');
     Assert.ok(description, 'Missing description argument.');
 
@@ -36,7 +35,6 @@ class ToDo extends AngaModel {
   }
 
   constructor(attrs) {
-
     super(attrs);
 
     Object.defineProperty(this, '_roles', {
@@ -46,7 +44,6 @@ class ToDo extends AngaModel {
   }
 
   async linkUser(id) {
-
     Assert.ok(id, 'Missing user id argument.');
 
     const update = {
@@ -61,7 +58,6 @@ class ToDo extends AngaModel {
   }
 
   static async findAllByUser(userId) {
-
     Assert.ok(userId, 'Missing userId argument.');
 
     const query = {
@@ -70,7 +66,6 @@ class ToDo extends AngaModel {
     return this.findAll(query);
   }
   static async findAllIncompleteByUser(userId) {
-
     Assert.ok(userId, 'Missing userId argument.');
 
     const query = {
@@ -82,23 +77,26 @@ class ToDo extends AngaModel {
   }
 }
 
-
 ToDo.collectionName = 'todos';
 ToDo.schema = schema;
-ToDo.indexes = [{
-  key: {
-    'user.id': 1
+ToDo.indexes = [
+  {
+    key: {
+      'user.id': 1
+    }
+  },
+  {
+    key: {
+      title: 1
+    },
+    unique: false
+  },
+  {
+    key: {
+      slug: 1
+    },
+    unique: false
   }
-}, {
-  key: {
-    title: 1
-  },
-  unique: false
-}, {
-  key: {
-    slug: 1
-  },
-  unique: false
-}];
+];
 
 module.exports = ToDo;
