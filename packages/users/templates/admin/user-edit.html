@@ -1,0 +1,26 @@
+<h2>User: {{user.username}}</h2>
+<section>
+  <form method="PUT">
+    <div class="form-row">
+      <label>Email
+        <input type="email" value="{{user.email}}" name="email" id="email" />
+      </label>
+    </div>
+    <div class="form-row">
+      <label>Username
+        <input type="text" value="{{user.username}}" name="username" id="username" />
+      </label>
+    </div>
+    <div>
+      <label>Active? {{user.isActive}}
+        <input type="checkbox" name="isActive" id="isActive" {{#if user.isActive}}checked{{/if}} />
+      </label>
+    </div>
+    <div>
+      <a href="#" class="action-button">Add Note</a>
+    </div>
+    <div>
+      <input type="submit" value="Update" />
+    </div>
+</form>
+</section>
