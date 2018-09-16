@@ -1,7 +1,8 @@
-const path = require('path');
+/*eslint node/no-missing-require: ["off"]*/
 
-require('app-module-path').addPath(path.join(__dirname, '../packages'));
-const anga = require('core');
+// links the anga modules for local dev, not required
+require('./links');
+const anga = require('anga-core');
 const entry = 'usageapp';
 
 const mainSettings = require(`./${entry}/settings`);

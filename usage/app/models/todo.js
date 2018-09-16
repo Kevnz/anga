@@ -1,6 +1,6 @@
 const Assert = require('assert');
 const Joi = require('joi');
-const AngaModel = require('model');
+const AngaModel = require('anga-model');
 const NewDate = require('joistick/new-date');
 
 const schema = Joi.object({
