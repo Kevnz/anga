@@ -8,9 +8,7 @@ const Session = require('./models/session');
 const Status = require('./models/status');
 const User = require('./models/user');
 
-
 const main = async function (mongodbUri) {
-
   let options = {};
 
   // get mongodb connection info
@@ -57,43 +55,46 @@ const main = async function (mongodbUri) {
 
   // setup root admin and user
 
-  await Admin.insertOne(new Admin({
-    _id: Admin.ObjectId('111111111111111111111111'),
-    groups: {
-      root: 'Root'
-    },
-    name: {
-      first: 'Root',
-      middle: '',
-      last: 'Admin'
-    },
-    user: {
-      id: '000000000000000000000000',
-      name: 'root'
-    }
-  }));
+  await Admin.insertOne(
+    new Admin({
+      _id: Admin.ObjectId('111111111111111111111111'),
+      groups: {
+        root: 'Root'
+      },
+      name: {
+        first: 'Root',
+        middle: '',
+        last: 'Admin'
+      },
+      user: {
+        id: '000000000000000000000000',
+        name: 'root'
+      }
+    })
+  );
 
   const passwordHash = await User.generatePasswordHash(rootPassword);
 
-  await User.insertOne(new User({
-    _id: User.ObjectId('000000000000000000000000'),
-    email: rootEmail.toLowerCase(),
-    password: passwordHash.hash,
-    roles: {
-      admin: {
-        id: '111111111111111111111111',
-        name: 'Root Admin'
-      }
-    },
-    username: 'root',
-    isEmailVerified: true
-  }));
+  await User.insertOne(
+    new User({
+      _id: User.ObjectId('000000000000000000000000'),
+      email: rootEmail.toLowerCase(),
+      password: passwordHash.hash,
+      roles: {
+        admin: {
+          id: '111111111111111111111111',
+          name: 'Root Admin'
+        }
+      },
+      username: 'root',
+      isEmailVerified: true
+    })
+  );
 
   // all done
 
   MongoModels.disconnect();
 
   console.log('First time setup complete.');
-
 };
 module.exports = main;

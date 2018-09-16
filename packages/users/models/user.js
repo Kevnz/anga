@@ -8,7 +8,10 @@ const Admin = require('./admin');
 
 const schema = Joi.object({
   _id: Joi.object(),
-  email: Joi.string().email().lowercase().required(),
+  email: Joi.string()
+    .email()
+    .lowercase()
+    .required(),
   isActive: Joi.boolean().default(true),
   password: Joi.string(),
   resetPassword: Joi.object({
@@ -26,13 +29,15 @@ const schema = Joi.object({
     })
   }).default(),
   timeCreated: Joi.date().default(NewDate(), 'time of creation'),
-  username: Joi.string().token().lowercase().required(),
+  username: Joi.string()
+    .token()
+    .lowercase()
+    .required(),
   isEmailVerified: Joi.boolean().default(false)
 });
 
 class User extends MongoModels {
   static async create(username, password, email) {
-
     Assert.ok(username, 'Missing username argument.');
     Assert.ok(password, 'Missing password argument.');
     Assert.ok(email, 'Missing email argument.');
@@ -52,7 +57,6 @@ class User extends MongoModels {
   }
 
   static async findByCredentials(username, password) {
-
     Assert.ok(username, 'Missing username argument.');
     Assert.ok(password, 'Missing password argument.');
 
@@ -80,7 +84,6 @@ class User extends MongoModels {
   }
 
   static findByEmail(email) {
-
     Assert.ok(email, 'Missing email argument.');
 
     const query = {
@@ -91,7 +94,6 @@ class User extends MongoModels {
   }
 
   static findByUsername(username) {
-
     Assert.ok(username, 'Missing username argument.');
 
     const query = {
@@ -101,7 +103,6 @@ class User extends MongoModels {
   }
 
   static async generatePasswordHash(password) {
-
     Assert.ok(password, 'Missing password argument.');
 
     const salt = await Bcrypt.genSalt(10);
@@ -114,7 +115,6 @@ class User extends MongoModels {
   }
 
   constructor(attrs) {
-
     super(attrs);
 
     Object.defineProperty(this, '_roles', {
@@ -124,14 +124,12 @@ class User extends MongoModels {
   }
 
   canPlayRole(role) {
-
     Assert.ok(role, 'Missing role argument.');
 
     return this.roles.hasOwnProperty(role);
   }
 
   async hydrateRoles() {
-
     if (this._roles) {
       return this._roles;
     }
@@ -150,7 +148,6 @@ class User extends MongoModels {
   }
 
   async linkAccount(id, name) {
-
     Assert.ok(id, 'Missing id argument.');
     Assert.ok(name, 'Missing name argument.');
 
@@ -167,7 +164,6 @@ class User extends MongoModels {
   }
 
   async linkAdmin(id, name) {
-
     Assert.ok(id, 'Missing id argument.');
     Assert.ok(name, 'Missing name argument.');
 
@@ -184,7 +180,6 @@ class User extends MongoModels {
   }
 
   async unlinkAccount() {
-
     const update = {
       $unset: {
         'roles.account': undefined
@@ -195,7 +190,6 @@ class User extends MongoModels {
   }
 
   async unlinkAdmin() {
-
     const update = {
       $unset: {
         'roles.admin': undefined
@@ -206,20 +200,21 @@ class User extends MongoModels {
   }
 }
 
-
 User.collectionName = 'anga_users';
 User.schema = schema;
-User.indexes = [{
-  key: {
-    username: 1
+User.indexes = [
+  {
+    key: {
+      username: 1
+    },
+    unique: true
   },
-  unique: true
-}, {
-  key: {
-    email: 1
-  },
-  unique: true
-}];
-
+  {
+    key: {
+      email: 1
+    },
+    unique: true
+  }
+];
 
 module.exports = User;

@@ -4,7 +4,6 @@ const Joi = require('joi');
 const MongoModels = require('anga-model');
 const NewDate = require('joistick/new-date');
 
-
 const schema = Joi.object({
   _id: Joi.object(),
   ip: Joi.string().required(),
@@ -12,15 +11,10 @@ const schema = Joi.object({
   username: Joi.string().required()
 });
 
-
 class AuthAttempt extends MongoModels {
   static async abuseDetected(ip, username) {
-
     Assert.ok(ip, 'Missing ip argument.');
     Assert.ok(username, 'Missing username argument.');
-    console.log(ip, 'Missing ip argument.');
-    console.log(username, 'Missing username argument.');
-    console.log('the this', this);
     const [countByIp, countByIpAndUser] = await Promise.all([
       this.count({
         ip
@@ -38,7 +32,6 @@ class AuthAttempt extends MongoModels {
   }
 
   static async create(ip, username) {
-
     Assert.ok(ip, 'Missing ip argument.');
     Assert.ok(username, 'Missing username argument.');
 
@@ -52,19 +45,20 @@ class AuthAttempt extends MongoModels {
   }
 }
 
-
 AuthAttempt.collectionName = 'anga_authAttempts';
 AuthAttempt.schema = schema;
-AuthAttempt.indexes = [{
-  key: {
-    ip: 1,
-    username: 1
+AuthAttempt.indexes = [
+  {
+    key: {
+      ip: 1,
+      username: 1
+    }
+  },
+  {
+    key: {
+      username: 1
+    }
   }
-}, {
-  key: {
-    username: 1
-  }
-}];
-
+];
 
 module.exports = AuthAttempt;

@@ -9,10 +9,8 @@ const schema = Joi.object({
   pivot: Joi.string().required()
 });
 
-
 class Status extends MongoModels {
   static async create(pivot, name) {
-
     Assert.ok(pivot, 'Missing pivot argument.');
     Assert.ok(name, 'Missing name argument.');
 
@@ -27,19 +25,20 @@ class Status extends MongoModels {
   }
 }
 
-
 Status._idClass = String;
 Status.collectionName = 'anga_statuses';
 Status.schema = schema;
-Status.indexes = [{
-  key: {
-    pivot: 1
+Status.indexes = [
+  {
+    key: {
+      pivot: 1
+    }
+  },
+  {
+    key: {
+      name: 1
+    }
   }
-}, {
-  key: {
-    name: 1
-  }
-}];
-
+];
 
 module.exports = Status;

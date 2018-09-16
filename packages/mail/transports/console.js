@@ -6,11 +6,10 @@ const transport = Nodemailer.createTransport({
   send: (mail, callback) => {
     let input = mail.message.createReadStream();
     input.pipe(process.stdout);
-    input.on('end', function () {
+    input.on('end', function() {
       callback(null, true);
     });
   }
 });
-
 
 module.exports = transport;

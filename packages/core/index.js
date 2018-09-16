@@ -1,4 +1,4 @@
-console.log('the core')
+console.log('the core');
 module.exports = {
   init: require('./init')
-}
+};

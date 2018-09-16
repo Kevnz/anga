@@ -20,7 +20,6 @@ const schema = Joi.object({
 
 class Session extends MongoModels {
   static async create(userId, ip, userAgent) {
-
     Assert.ok(userId, 'Missing userId argument.');
     Assert.ok(ip, 'Missing ip argument.');
     Assert.ok(userAgent, 'Missing userAgent argument.');
@@ -43,7 +42,6 @@ class Session extends MongoModels {
   }
 
   static async findByCredentials(id, key) {
-
     Assert.ok(id, 'Missing id argument.');
     Assert.ok(key, 'Missing key argument.');
 
@@ -61,7 +59,6 @@ class Session extends MongoModels {
   }
 
   static async generateKeyHash() {
-
     const key = uuid.v4();
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(key, salt);
@@ -73,7 +70,6 @@ class Session extends MongoModels {
   }
 
   async updateLastActive() {
-
     const update = {
       $set: {
         lastActive: new Date()
@@ -86,10 +82,12 @@ class Session extends MongoModels {
 
 Session.collectionName = 'anga_sessions';
 Session.schema = schema;
-Session.indexes = [{
-  key: {
-    userId: 1
+Session.indexes = [
+  {
+    key: {
+      userId: 1
+    }
   }
-}];
+];
 
 module.exports = Session;

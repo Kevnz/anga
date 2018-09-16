@@ -7,6 +7,9 @@ module.exports = {
   helpers: Path.join(__dirname, 'templates', 'helpers'),
   partials: Path.join(__dirname, 'templates', 'partials'),
   routes: Path.join(__dirname, 'routes', '**.js').replace('/', ''),
-  routesRelative: Path.relative(process.cwd(), Path.join(__dirname, 'routes', '**.js')),
+  routesRelative: Path.relative(
+    process.cwd(),
+    Path.join(__dirname, 'routes', '**.js')
+  ),
   setup
 };

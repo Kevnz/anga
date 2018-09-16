@@ -11,7 +11,6 @@ const schema = Joi.object({
 
 class AdminGroup extends MongoModels {
   static async create(name) {
-
     Assert.ok(name, 'Missing name argument.');
 
     const document = new this({
@@ -25,7 +24,6 @@ class AdminGroup extends MongoModels {
   }
 
   hasPermissionTo(permission) {
-
     Assert.ok(permission, 'Missing permission argument.');
 
     if (this.permissions && this.permissions.hasOwnProperty(permission)) {

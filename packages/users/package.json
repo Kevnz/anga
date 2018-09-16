@@ -3,12 +3,16 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": ">=10.0.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "anga-core": "^1.0.0",
     "anga-mail": "^1.0.0",
     "anga-model": "^1.0.0",
     "bcrypt": "^3.0.0",

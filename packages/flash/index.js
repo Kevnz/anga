@@ -12,21 +12,21 @@ internals.defaults = {
   cache: {}
 };
 
-const register = function (server, options) {
-
+const register = function(server, options) {
   const settings = Hoek.applyToDefaults(internals.defaults, options);
   settings.cache = server.cache({
     segment: settings.segment,
     expiresIn: settings.expires
   });
 
-  const flash = function (message, destination) {
+  const flash = function(message, destination) {
     console.log('the flash this', arguments);
     let reply = this;
     let request = reply.request;
     let store = request.yar.get('anga-flash');
     console.log('store', store);
-    if (message) { //We're writing - so add the message to the stack
+    if (message) {
+      //We're writing - so add the message to the stack
       if (store && store.messages) {
         if (Array.isArray(message)) {
           // 'apply' takes an array of arguments as its second parameter, and so in this case
@@ -50,7 +50,8 @@ const register = function (server, options) {
           return reply.redirect(destination);
         }
       }
-    } else { //We're reading -  so return and then clear all messages
+    } else {
+      //We're reading -  so return and then clear all messages
       if (store && store.messages) {
         let messages = Hoek.clone(store.messages);
         store.messages = [];
@@ -65,7 +66,7 @@ const register = function (server, options) {
 
   server.decorate('toolkit', 'flash', flash);
 
-  server.ext('onPostAuth', function (request, h) {
+  server.ext('onPostAuth', function(request, h) {
     return h.continue;
   });
 };

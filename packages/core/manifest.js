@@ -9,28 +9,45 @@ module.exports = async (apps, inMemoryUri) => {
   debug('admin routes', admin.routes);
   debug('user routes', users.routes);
   //await init(inMemoryUri);
-  debug('cwd', process.cwd())
-  const globbedApps = apps.map((app) => Path.join(process.cwd(), `/${app}/models/*.js`).replace('/', ''));
+  debug('cwd', process.cwd());
+  const globbedApps = apps.map(app =>
+    Path.join(process.cwd(), `/${app}/models/*.js`).replace('/', '')
+  );
   console.log('globbedApps', globbedApps);
   const models = await globby(globbedApps);
-  const globbedRoutes = apps.map((app) => Path.relative(process.cwd(), Path.join(process.cwd(), `/${app}/routes/*.js`)));
+  const globbedRoutes = apps.map(app =>
+    Path.relative(
+      process.cwd(),
+      Path.join(process.cwd(), `/${app}/routes/*.js`)
+    )
+  );
 
-  const routes = globbedRoutes.concat(users.routesRelative, admin.routesRelative);
+  const routes = globbedRoutes.concat(
+    users.routesRelative,
+    admin.routesRelative
+  );
   debug('The routes to load', routes);
 
-  const pluginRegistration = [{
+  const pluginRegistration = [
+    {
       plugin: require('blipp')
-    }, {
+    },
+    {
       plugin: require('inert')
-    }, {
+    },
+    {
       plugin: require('vision')
-    }, {
+    },
+    {
       plugin: require('hapi-remote-address')
-    }, {
+    },
+    {
       plugin: require('hapi-auth-cookie')
-    }, {
+    },
+    {
       plugin: require('hapi-boom-decorators')
-    }, {
+    },
+    {
       plugin: require('yar'),
       options: {
         storeBlank: false,
@@ -39,9 +56,11 @@ module.exports = async (apps, inMemoryUri) => {
           isSecure: false
         }
       }
-    }, {
+    },
+    {
       plugin: require('anga-auth')
-    }, {
+    },
+    {
       plugin: 'anga-models-loader',
       options: {
         mongodb: {
@@ -53,7 +72,8 @@ module.exports = async (apps, inMemoryUri) => {
         models: models.concat(userModels),
         autoIndex: true
       }
-    }, {
+    },
+    {
       plugin: require('anga-logger')
     },
     /* {
@@ -67,7 +87,8 @@ module.exports = async (apps, inMemoryUri) => {
      }, */
     {
       plugin: require('anga-flash')
-    }, {
+    },
+    {
       plugin: require('hapi-router'),
       options: {
         routes: routes
@@ -78,23 +99,29 @@ module.exports = async (apps, inMemoryUri) => {
   return {
     server: {
       port: 4567 || process.env.PORT,
-      cache: [{
-        name: 'mongoCache',
-        engine: require('catbox-mongodb'),
-        uri: inMemoryUri,
-        partition: 'cache'
-      }],
+      cache: [
+        {
+          name: 'mongoCache',
+          engine: require('catbox-mongodb'),
+          uri: inMemoryUri,
+          partition: 'cache'
+        }
+      ],
       routes: {
         cors: {
           origin: ['*'],
-          additionalHeaders: ['x-requested-with', 'accept-language', 'token', 'Content-Range', 'content-range']
-        },
-
+          additionalHeaders: [
+            'x-requested-with',
+            'accept-language',
+            'token',
+            'Content-Range',
+            'content-range'
+          ]
+        }
       },
       router: {
         stripTrailingSlash: true
-      },
-
+      }
     },
     register: {
       plugins: pluginRegistration.concat()

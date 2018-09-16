@@ -5,10 +5,11 @@ const Joi = require('joi');
 const MongoModels = require('anga-model');
 const NewDate = require('joistick/new-date');
 
-
 const schema = Joi.object({
   _id: Joi.object(),
-  groups: Joi.object().description('{ groupId: name, ... }').default(),
+  groups: Joi.object()
+    .description('{ groupId: name, ... }')
+    .default(),
   name: Joi.object({
     first: Joi.string().required(),
     middle: Joi.string().allow(''),
@@ -18,14 +19,14 @@ const schema = Joi.object({
   timeCreated: Joi.date().default(NewDate(), 'time of creation'),
   user: Joi.object({
     id: Joi.string().required(),
-    name: Joi.string().lowercase().required()
+    name: Joi.string()
+      .lowercase()
+      .required()
   })
 });
 
-
 class Admin extends MongoModels {
   static async create(name) {
-
     Assert.ok(name, 'Missing name argument.');
 
     const document = new this({
@@ -37,7 +38,6 @@ class Admin extends MongoModels {
   }
 
   static findByUsername(username) {
-
     Assert.ok(username, 'Missing username argument.');
 
     const query = {
@@ -48,7 +48,6 @@ class Admin extends MongoModels {
   }
 
   static nameAdapter(name) {
-
     Assert.ok(name, 'Missing name argument.');
 
     const nameParts = name.trim().split(/\s/);
@@ -61,7 +60,6 @@ class Admin extends MongoModels {
   }
 
   constructor(attrs) {
-
     super(attrs);
 
     Object.defineProperty(this, '_groups', {
@@ -71,12 +69,10 @@ class Admin extends MongoModels {
   }
 
   fullName() {
-
     return `${this.name.first} ${this.name.last}`.trim();
   }
 
   async hasPermissionTo(permission) {
-
     Assert.ok(permission, 'Missing permission argument.');
 
     if (this.permissions && this.permissions.hasOwnProperty(permission)) {
@@ -87,8 +83,7 @@ class Admin extends MongoModels {
 
     let groupHasPermission = false;
 
-    Object.keys(this._groups).forEach((group) => {
-
+    Object.keys(this._groups).forEach(group => {
       if (this._groups[group].hasPermissionTo(permission)) {
         groupHasPermission = true;
       }
@@ -98,7 +93,6 @@ class Admin extends MongoModels {
   }
 
   async hydrateGroups() {
-
     if (this._groups) {
       return this._groups;
     }
@@ -112,7 +106,6 @@ class Admin extends MongoModels {
     });
 
     this._groups = groups.reduce((accumulator, group) => {
-
       accumulator[group._id] = group;
 
       return accumulator;
@@ -122,14 +115,12 @@ class Admin extends MongoModels {
   }
 
   isMemberOf(group) {
-
     Assert.ok(group, 'Missing group argument.');
 
     return this.groups.hasOwnProperty(group);
   }
 
   async linkUser(id, name) {
-
     Assert.ok(id, 'Missing id argument.');
     Assert.ok(name, 'Missing name argument.');
 
@@ -146,7 +137,6 @@ class Admin extends MongoModels {
   }
 
   async unlinkUser() {
-
     const update = {
       $unset: {
         user: undefined
@@ -157,18 +147,19 @@ class Admin extends MongoModels {
   }
 }
 
-
 Admin.collectionName = 'anga_admins';
 Admin.schema = schema;
-Admin.indexes = [{
-  key: {
-    'user.id': 1
+Admin.indexes = [
+  {
+    key: {
+      'user.id': 1
+    }
+  },
+  {
+    key: {
+      'user.name': 1
+    }
   }
-}, {
-  key: {
-    'user.name': 1
-  }
-}];
-
+];
 
 module.exports = Admin;

@@ -1,6 +1,5 @@
 const mongoModels = require('mongo-models');
 
-
 /**
  * serialize
  *

@@ -12,15 +12,16 @@ const consoleTransport = require('./transports/console');
 const mailtrapTransport = require('./transports/mailtrap');
 const readFile = Util.promisify(Fs.readFile);
 
-
 class Mailer {
   static async renderTemplate(app, signature, context) {
-
     if (this.templateCache[signature]) {
       return this.templateCache[signature](context);
     }
 
-    const filePath = Path.resolve(__dirname, `../${app}/emails/${signature}.hbs.md`);
+    const filePath = Path.resolve(
+      __dirname,
+      `../${app}/emails/${signature}.hbs.md`
+    );
     const options = {
       encoding: 'utf-8'
     };
@@ -30,7 +31,6 @@ class Mailer {
 
     return this.templateCache[signature](context);
   }
-
 
   static async sendEmail(options, template, context) {
     const [app, file] = template.split('/');
@@ -45,13 +45,15 @@ class Mailer {
   }
 }
 
-
 Mailer.templateCache = {};
 //Mailer.transport = Nodemailer.createTransport(consoleTransport);
 Mailer.transport = consoleTransport;
 
-Mailer.transport.use('compile', Markdown({
-  useEmbeddedImages: true
-}));
+Mailer.transport.use(
+  'compile',
+  Markdown({
+    useEmbeddedImages: true
+  })
+);
 
 module.exports = Mailer;
