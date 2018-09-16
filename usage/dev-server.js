@@ -1,3 +1,4 @@
+/*eslint node/no-unpublished-require: ["off"]*/
 const MongodbMemoryServer = require('mongodb-memory-server').default;
 
 const setupServerReturnUri = async () => {
