@@ -8,21 +8,23 @@ const Session = require('./models/session');
 const Status = require('./models/status');
 const User = require('./models/user');
 
-const main = async function (mongodbUri) {
+const main = async function (mongodbUri, dbName) {
   let options = {
     mongodbUri: mongodbUri,
-    db: 'anga'
+    db: dbName
   };
 
   const config = Object.assign({}, options.default, {
-    mongodbUri: mongodbUri,
+    uri: mongodbUri,
     db: 'anga'
   });
+  console.log('dbconfig', config);
   const db = await MongoModels.connect(config);
 
   if (!db) {
     throw Error('Could not connect to MongoDB.');
   }
+  console.log('connected');
 
   // get root user creds
 
