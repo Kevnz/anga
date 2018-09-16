@@ -1,18 +1,13 @@
 const Joi = require('joi');
 
 const getModel = async (request) => {
-  console.log('request.params.model', request.params.model);
   const app = request.APPS_SETTINGS.filter(
     (app) => app.APP_ID === request.params.appName
   )[0];
   const model = app.MODELS.filter((model) => {
     const m = require(model);
-    console.log('m?', model);
-    console.log('collection name?', m.collectionName);
-    console.log('request.params.model', request.params.model);
     return m.collectionName === request.params.model;
   })[0];
-  console.log('The model?', model);
   const Model = require(model);
   return Model;
 };
@@ -108,7 +103,7 @@ module.exports = [
       validate: {},
       pre: []
     },
-    handler: async (request, h) => {
+    handler: async (request) => {
       const app = request.APPS_SETTINGS.filter(
         (app) => app.APP_ID === request.params.appName
       )[0];
