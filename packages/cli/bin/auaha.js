@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 const inquirer = require('inquirer');
 const projectBuilder = require('../builders/project');
 
@@ -11,7 +9,7 @@ inquirer
       message: 'What is the name of your project?'
     }
   ])
-  .then(async (answers) => {
+  .then(async answers => {
     console.log('Preparing to create service');
     await projectBuilder(answers.name);
   });

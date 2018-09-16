@@ -6,31 +6,31 @@ const to = require('to-case');
 const fs = require('fs-extra');
 const exec = promisify(require('child_process').exec);
 const writeFile = promisify(fs.writeFile);
-const editorconfig = require(`../templates/editorconfig`);
-const eslintrc = require(`../templates/eslint`);
-const gitignore = require(`../templates/gitignore`);
+const editorconfig = require('../templates/editorconfig');
+const eslintrc = require('../templates/eslint');
+const gitignore = require('../templates/gitignore');
 
-const createProjectDirectory = async (name) => {
+const createProjectDirectory = async name => {
   const cased = to.slug(name).toLowerCase();
   const pathName = `./${cased}`;
   await fs.ensureDir(pathName);
   return pathName;
 };
 
-const addUtilFiles = async (root) => {
+const addUtilFiles = async root => {
   await writeFile(`${root}/.eslintrc.json`, eslintrc);
   await writeFile(`${root}/.editorconfig`, editorconfig);
   await writeFile(`${root}/.gitignore`, gitignore);
   await writeFile(`${root}/.npmrc`, npmrc);
 };
 
-const npmInit = async (root) => {
+const npmInit = async root => {
   const newCWD = path.resolve(process.cwd(), root);
   const { stdout, stderr } = await exec('npm init -y', { cwd: newCWD });
   return null;
 };
 
-const npmInstall = async (root) => {
+const npmInstall = async root => {
   const newCWD = path.resolve(process.cwd(), root);
   await npm.install(
     [
@@ -64,7 +64,7 @@ const npmInstall = async (root) => {
   );
 };
 
-const addNpmScripts = async (root) => {
+const addNpmScripts = async root => {
   const p = await fs.readJSON(`${root}/package.json`);
   p.scripts = {
     test: 'jest',
