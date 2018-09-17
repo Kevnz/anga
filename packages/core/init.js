@@ -1,7 +1,9 @@
-process.env.DEBUG = '*';
+process.env.DEBUG = process.env.DEBUG ? process.env.DEBUG : '*';
+
 require('noobnoob');
 
 const debug = require('debug')('anga:core');
+const debugErr = require('debug')('anga:core:error');
 const Glue = require('glue');
 const fs = require('fs');
 const Path = require('path');
@@ -21,9 +23,10 @@ let server;
 const templatePaths = [];
 const partialPaths = [];
 module.exports = {
-  load: async ({ INSTALLED_APPS, CONNECTION, NAME }, config) => {
-    await Users.setup(CONNECTION);
-    debug('uri', CONNECTION);
+  load: async ({ INSTALLED_APPS, CONNECTION, NAME, DB }, config) => {
+    debug('Params passed to LOAD', { INSTALLED_APPS, CONNECTION, NAME, DB });
+    debug('conf', config);
+    await Users.setup(CONNECTION, DB);
 
     const LOCAL_APPS = INSTALLED_APPS.filter(
       (app) => app.indexOf('anga-') === -1
@@ -31,7 +34,7 @@ module.exports = {
 
     const APPS_SETTINGS = await pMap(LOCAL_APPS, async (app) => {
       const setsFile = Path.join(process.cwd(), `/${app}/settings`);
-      console.log('sets fie', setsFile);
+      debug('Settings Files', setsFile);
       const settings = require(setsFile);
       const globbedApps = Path.join(process.cwd(), `/${app}/models/*.js`);
       debug('globbed apps', globbedApps);
@@ -41,7 +44,7 @@ module.exports = {
       settings.APP_ID = app;
       return settings;
     });
-    console.log('settings', APPS_SETTINGS);
+    debug('Apps Settings', APPS_SETTINGS);
     const manifest = await manifester(LOCAL_APPS, CONNECTION);
     //additionally this should take a configured manifest and merge it in with the default manifest
     debug('cwd', process.cwd());
@@ -64,10 +67,11 @@ module.exports = {
       manifest,
       options
     );
-    // const helperPaths = templatePaths.map(tp => `${tp}/helpers`);
+    debug('After compose');
+
     templatePaths.push(Users.templates);
     templatePaths.push(Admin.templates);
-    debug('After compose');
+
     server.views({
       engines: {
         html: require('handlebars'),
@@ -80,17 +84,17 @@ module.exports = {
       helpersPath: [Users.helpers, Admin.helpers],
       partialsPath: [Users.partials, Admin.partials]
     });
-    debug('load complete');
     server.decorate('request', 'INSTALLED_APPS', INSTALLED_APPS);
     server.decorate('request', 'APP_NAME', NAME);
     server.decorate('server', 'INSTALLED_APPS', INSTALLED_APPS);
     server.decorate('request', 'APPS_SETTINGS', APPS_SETTINGS);
     server.decorate('server', 'APPS_SETTINGS', APPS_SETTINGS);
+    debug('server setup complete');
+
     return server;
   },
   start: async () => {
-    //do something and start the server
-    debug('Starting');
+    debug('Starting the server');
     await server.start();
     debug('Started');
     return server;
@@ -102,7 +106,8 @@ module.exports = {
       });
       debug('The ANGA web server stopped');
     } catch (err) {
-      debug('Error stopping server', err);
+      debugErr('Error stopping server', err);
+      throw err;
     }
   }
 };
