@@ -10,7 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "debug": "^3.1.0",
-    "handlebars": "^4.0.11",
+    "handlebars": "^4.5.3",
     "hoek": "^5.0.3",
     "nodemailer": "^4.6.7",
     "nodemailer-markdown": "^1.0.2"
